@@ -41,7 +41,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: always()
       with:
-        name: procmon
+        name: procmon-${{ matrix.python }}-${{ matrix.arch }}
         path: C:\pmc.pml
     - name: Test Kivy
       run: |
