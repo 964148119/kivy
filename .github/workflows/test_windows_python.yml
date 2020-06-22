@@ -29,7 +29,20 @@ jobs:
     - name: Install Kivy
       run: |
         . .\.ci\windows_ci.ps1
+        [System.Net.WebClient]::new().DownloadFile('https://live.sysinternals.com/procmon.exe' , 'C:\Windows\procmon.exe')
+        [System.Net.WebClient]::new().DownloadFile('https://github.com/al-cheb/test/raw/master/procmon.pmc' , 'C:\procmon.pmc')
+        procmon.exe /accepteula /backingfile c:\log.pml /quiet
+
         Install-kivy
+
+        procmon.exe /terminate | Out-Null
+        dir C:\
+        procmon.exe /Quiet /Minimized /Openlog c:\log.pml /LoadConfig C:\procmon.pmc /SaveApplyFilter /SaveAs C:\pmc.pml | Out-Null
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: procmon
+        path: C:\pmc.pml
     - name: Test Kivy
       run: |
         . .\.ci\windows_ci.ps1
