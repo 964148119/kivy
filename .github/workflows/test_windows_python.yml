@@ -37,7 +37,7 @@ jobs:
 
         procmon.exe /terminate | Out-Null
         dir C:\
-        procmon.exe /Quiet /Minimized /Openlog c:\log.pml /LoadConfig C:\procmon.pmc /SaveApplyFilter /SaveAs C:\pmc.pml | Out-Null
+        procmon.exe /Quiet /Minimized /Openlog c:\log.pml /LoadConfig .\.ci\ProcmonConfiguration.pmc /SaveApplyFilter /SaveAs C:\pmc.pml | Out-Null
     - uses: actions/upload-artifact@v2
       if: always()
       with:
